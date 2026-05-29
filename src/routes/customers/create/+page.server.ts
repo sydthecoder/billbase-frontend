@@ -8,7 +8,6 @@ export const actions: Actions = {
         const form = await request.formData()
 
         const payload = {
-            customer_type:      form.get('customer_type') as 'individual' | 'business',
             first_name:         form.get('first_name') as string,
             last_name:          form.get('last_name') as string,
             email:              form.get('email') as string,

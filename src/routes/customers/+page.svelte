@@ -24,7 +24,7 @@
                 <tr>
                     <td>{customer.customer_code}</td>
                     <td>{customer.full_name}</td>
-                    <td>{customer.customer_type}</td>
+                    <td>..</td>
                     <td>{customer.email}</td>
                     <td>{customer.phone ?? '-'}</td>
                     <td>{customer.status}</td>

@@ -98,11 +98,14 @@
                     icon: SettingsIcon,
                     name: 'Settings',
                     subItems: [
-                        { name: 'Alerts', path: '/alerts', pro: false },
-                        { name: 'Avatars', path: '/avatars', pro: false },
-                        { name: 'Badge', path: '/badge', pro: false },
-                        { name: 'Buttons', path: '/buttons', pro: false },
-                        { name: 'Videos', path: '/videos', pro: false },
+                        { name: 'General', path: '/settings/general', pro: false },
+                        { name: 'Cedit Tokens', path: '/avatars', pro: false },
+                        { name: 'Payment Gateways', path: '/badge', pro: false },
+                        { name: 'Email Configuration', path: '/buttons', pro: false },
+                        { name: 'Email Templates', path: '/videos', pro: false },
+                        { name: 'SMS Templates', path: '/buttons', pro: false },
+                        { name: 'Users (Teams)', path: '/buttons', pro: false },
+                        { name: 'My Billing', path: '/buttons', pro: false },
                     ],
                 },
             ],
@@ -160,7 +163,7 @@
                             {#if item.subItems}
                                 <button
                                     onclick={() => toggleSubmenu(groupIndex, index)}
-                                    class={`menu-item group w-full ${
+                                    class={`menu-item group w-full outline-none ${
                                         isSubmenuOpen(groupIndex, index)
                                             ? 'menu-item-active'
                                             : 'menu-item-inactive'

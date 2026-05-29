@@ -10,7 +10,6 @@ export interface CustomerAddress {
 export interface Customer {
     id: number
     customer_code: string
-    customer_type: 'individual' | 'business'
     company_name: string | null
     company_reg_number: string | null
     vat_number: string | null
@@ -26,7 +25,6 @@ export interface Customer {
 }
 
 export interface CreateCustomerPayload {
-    customer_type: 'individual' | 'business'
     company_name?: string
     company_reg_number?: string
     vat_number?: string

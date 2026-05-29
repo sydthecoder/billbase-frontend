@@ -5,7 +5,6 @@
 
     let { form }: { form: ActionData } = $props()
 
-    let customerType = $derived(form?.customer_type ?? 'individual')
 </script>
 
 <AdminLayout>
@@ -14,32 +13,6 @@
     <form method="POST" use:enhance>
         {#if form?.error}
             <p>{form.error}</p>
-        {/if}
-
-        <select name="customer_type" bind:value={customerType}>
-            <option value="individual">Individual</option>
-            <option value="business">Business</option>
-        </select>
-
-        {#if customerType === 'business'}
-            <input
-                type="text"
-                name="company_name"
-                value={form?.company_name ?? ''}
-                placeholder="Company Name"
-            />
-            <input
-                type="text"
-                name="company_reg_number"
-                value={form?.company_reg_number ?? ''}
-                placeholder="Registration Number"
-            />
-            <input
-                type="text"
-                name="vat_number"
-                value={form?.vat_number ?? ''}
-                placeholder="VAT Number"
-            />
         {/if}
 
         <input
