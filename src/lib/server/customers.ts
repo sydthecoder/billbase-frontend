@@ -29,3 +29,11 @@ export async function createCustomer(
     const json = await response.json()
     return json.data
 }
+
+export async function deleteCustomer(token: string, id: number): Promise<void> {
+    const response = await serverApi(`/customers/${id}`, {
+        method: 'DELETE',
+    }, `auth_token=${token}`)
+
+    if (!response.ok) throw new Error('Failed to delete customer')
+}

@@ -141,7 +141,7 @@
             {#if createUrl}
                 <a
                     href={createUrl}
-                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500 text-white shadow-theme-xs hover:bg-brand-600 transition-colors flex-shrink-0"
+                    class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500 text-white shadow-theme-xs hover:bg-brand-600 transition-colors shrink-0"
                     title="Create new"
                 >
                     <PlusIcon size={20} />
@@ -160,7 +160,6 @@
         </div>
     {/if}
 
-    <!-- Table -->
     <div class="custom-scrollbar overflow-x-auto">
         <table class="w-full table-auto">
             <TableHeader
