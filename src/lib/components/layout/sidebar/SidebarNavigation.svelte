@@ -46,11 +46,6 @@
                     path: '/',
                 },
                 {
-                    icon: CalenderIcon,
-                    name: 'Calendar',
-                    path: '/calendar',
-                },
-                {
                     icon: UserCircleIcon,
                     name: 'Customers',
                     path: '/customers',
