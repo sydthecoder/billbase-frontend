@@ -9,19 +9,14 @@ export const actions: Actions = {
 
         const email = form.get('email') as string
         const password = form.get('password') as string
-        const password_confirmation = form.get('password_confirmation') as string
 
-        if (!email || !password || !password_confirmation) {
+        if (!email || !password) {
             return fail(422, { error: 'All fields are required.' })
-        }
-
-        if (password !== password_confirmation) {
-            return fail(422, { error: 'Passwords do not match.', email })
         }
 
         const response = await serverApi('/auth/register', {
             method: 'POST',
-            body: JSON.stringify({ email, password, password_confirmation }),
+            body: JSON.stringify({ email, password }),
         })
 
         const json = await response.json()

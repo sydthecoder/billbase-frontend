@@ -2,10 +2,42 @@ export interface AuthUser {
     id: number
     first_name: string
     last_name: string
+    full_name: string | null
     email: string
+    phone: string | null
     role: 'owner' | 'admin' | 'staff'
-    organization_id: number
+    avatar_url: string | null
     last_login_at: string | null
+    organization: {
+        id: number
+        org_code: string
+        name: string | null
+        email: string | null
+        phone: string | null
+        logo_url: string | null
+        address: {
+            street_address: string | null
+            suburb: string | null
+            city: string | null
+            province: string | null
+            postal_code: string | null
+            country: string
+        }
+        currency: string
+        reg_number: string | null
+        tax_number: string | null
+        status: string
+        subscription: {
+            status: string | null
+            trial_ends_at: string | null
+            is_usable: boolean
+            plan: {
+                id: number | null
+                name: string | null
+                slug: string | null
+            }
+        }
+    }
 }
 
 export interface LoginPayload {

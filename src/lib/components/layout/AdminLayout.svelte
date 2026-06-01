@@ -7,7 +7,7 @@
     let { children } = $props()
 </script>
 
-<div class="min-h-screen xl:flex">
+<div class="min-h-screen xl:flex ">
     <Sidebar />
     <Backdrop />
 

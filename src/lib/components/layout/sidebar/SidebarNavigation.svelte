@@ -12,8 +12,8 @@
     import LandmarkIcon from '@lucide/svelte/icons/landmark'
     import CreditCardIcon from '@lucide/svelte/icons/credit-card'
     import SettingsIcon from '@lucide/svelte/icons/settings'
-    import ChevronDownIcon from '$lib/components/icons/ChevronDownIcon.svelte'
-    import HorizontalDots from '$lib/components/icons/HorizontalDots.svelte'
+    import ChevronDownIcon from '@lucide/svelte/icons/chevron-down'
+    import HorizontalDots from '@lucide/svelte/icons/ellipsis'
 
     type IconComponent = Component<any>
 
