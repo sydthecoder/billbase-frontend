@@ -2,6 +2,7 @@
     import Trash2Icon from '@lucide/svelte/icons/trash-2'
     import XIcon from '@lucide/svelte/icons/x'
     import { fade, scale } from 'svelte/transition'
+    import ButtonLoader from './forms/ButtonLoader.svelte';
 
     interface DeleteModalProps {
         open: boolean
@@ -70,10 +71,7 @@
                     class="flex flex-1 items-center justify-center gap-2 rounded-lg bg-error-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-error-700 disabled:opacity-70 dark:bg-error-500 dark:hover:bg-error-600"
                 >
                     {#if loading}
-                        <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-                        </svg>
+                        <ButtonLoader />
                     {:else}
                         Delete
                     {/if}

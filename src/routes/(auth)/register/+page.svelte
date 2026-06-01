@@ -6,8 +6,9 @@
     import PasswordInput from '$lib/components/ui/forms/PasswordInput.svelte';
     import Alert from '$lib/components/ui/Alert.svelte'
     import CheckIcon from '@lucide/svelte/icons/check'
+    import ButtonLoader from '$lib/components/ui/forms/ButtonLoader.svelte';
 
-    let showPassword = $state(false)
+    let loading = $state(false)
     let keepLoggedIn = $state(false)
     let { form }: { form: ActionData } = $props()
 </script>
@@ -89,7 +90,13 @@
                                 <Alert variant="error" title="Error" message={form.error} />
                             {/if}
 
-                            <form method="POST" use:enhance>
+                            <form method="POST" use:enhance={() => {
+                                loading = true
+                                return async ({ update }) => {
+                                    await update()
+                                    loading = false
+                                }
+                            }}>
                                 <div class="space-y-5">
                                     <div>
                                         <Label for="email" text="Email" required />
@@ -139,9 +146,14 @@
                                     <div>
                                         <button
                                             type="submit"
-                                            class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600"
+                                            disabled={loading}
+                                            class="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 disabled:opacity-70 disabled:cursor-not-allowed"
                                         >
-                                            Register
+                                            {#if loading}
+                                                <ButtonLoader />
+                                            {:else}
+                                                Register
+                                            {/if}
                                         </button>
                                     </div>
                                 </div>

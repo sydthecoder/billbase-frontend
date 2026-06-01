@@ -33,12 +33,12 @@
         </p>
 
     {:else if variant === 'code'}
-        <span class="text-theme-xs font-medium uppercase text-gray-600 dark:text-gray-400">
+        <span class="text-theme-xs font-medium uppercase text-gray-600 dark:text-gray-200">
             {@render children()}
         </span>
 
     {:else if variant === 'badge' && status}
-        <span class={`rounded-sm shadow-sm px-3 py-2 text-theme-xs font-medium ${badgeClass[status]}`}>
+        <span class={`rounded-full shadow-sm px-4 py-1 text-theme-xs font-medium ${badgeClass[status]}`}>
             {@render children()}
         </span>
 
