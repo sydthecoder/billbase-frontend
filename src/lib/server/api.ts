@@ -5,7 +5,7 @@ export async function serverApi(
     options: RequestInit = {},
     cookieHeader?: string
 ) {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const response = await fetch(`https://api.billbase.co.za${path}`, {
         ...options,
         headers: {
             'Accept': 'application/json',
