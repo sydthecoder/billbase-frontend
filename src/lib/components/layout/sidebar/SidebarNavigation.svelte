@@ -14,6 +14,7 @@
     import SettingsIcon from '@lucide/svelte/icons/settings'
     import ChevronDownIcon from '@lucide/svelte/icons/chevron-down'
     import HorizontalDots from '@lucide/svelte/icons/ellipsis'
+    import CrownIcon from '@lucide/svelte/icons/crown'
 
     type IconComponent = Component<any>
 
@@ -63,7 +64,7 @@
                     name: 'Invoices',
                     subItems: [
                         { name: 'Once-Off Invoices', path: '/invoices', pro: false },
-                        { name: 'Recurring Invoices', path: '/invoices/recurring', pro: false },
+                        { name: 'Recurring Invoices', path: '/invoices/recurring', pro: true },
                     ],
                 },
                 {
@@ -237,16 +238,11 @@
                                                             </span>
                                                         {/if}
                                                         {#if subItem.pro}
-                                                            <span
-                                                                class={`menu-dropdown-badge ${
-                                                                    isActive(subItem.path)
-                                                                        ? 'menu-dropdown-badge-active'
-                                                                        : 'menu-dropdown-badge-inactive'
-                                                                }`}
-                                                            >
-                                                                pro
-                                                            </span>
+                                                            <div class="h-6 w-6 bg-yellow-600 rounded-full flex items-center justify-center">
+                                                                <CrownIcon size={18} class="text-black" />
+                                                            </div>
                                                         {/if}
+                                                        
                                                     </span>
                                                 </a>
                                             </li>

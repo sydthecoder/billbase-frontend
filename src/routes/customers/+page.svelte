@@ -6,7 +6,7 @@
     import RowActions from '$lib/components/table/RowActions.svelte'
     import DeleteModal from '$lib/components/ui/DeleteModal.svelte'
     import ArrowUpRightIcon from '@lucide/svelte/icons/arrow-up-right'
-    import PenIcon from '@lucide/svelte/icons/notebook-pen'
+    import SquarePenIcon from '@lucide/svelte/icons/square-pen'
     import Trash2Icon from '@lucide/svelte/icons/trash-2'
     import type { PageData } from './$types'
     import type { Customer } from '$lib/types'
@@ -80,7 +80,7 @@
             <TableCell variant="action">
                 <RowActions actions={[
                     { label: 'View',   icon: ArrowUpRightIcon, href: `/customers/${customer.id}` },
-                    { label: 'Edit',   icon: PenIcon,          href: `/customers/${customer.id}/edit` },
+                    { label: 'Edit',   icon: SquarePenIcon,          href: `/customers/${customer.id}/edit` },
                     { label: 'Delete', icon: Trash2Icon,        variant: 'danger', onclick: () => deleteTarget = customer },
                 ]} />
             </TableCell>
