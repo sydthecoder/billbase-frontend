@@ -1,11 +1,13 @@
-import { API_BASE_URL } from '$env/static/private'
+import { env } from "$env/dynamic/private";
 
 export async function serverApi(
     path: string,
     options: RequestInit = {},
     cookieHeader?: string
 ) {
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    const baseUrl = env.API_BASE_URL;
+
+    const response = await fetch(`${baseUrl}${path}`, {
         ...options,
         headers: {
             'Accept': 'application/json',
