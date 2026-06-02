@@ -1,13 +1,17 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
     import type { ActionData } from './$types'
+    import { enhanceWithToast } from '$lib/utils/formEnhance'
     import AdminLayout from '$lib/components/layout/AdminLayout.svelte'
     import FormCard from '$lib/components/ui/FormCard.svelte';
     import Label from '$lib/components/ui/forms/Label.svelte';
     import TextInput from '$lib/components/ui/forms/TextInput.svelte';
     import Select from '$lib/components/ui/forms/Select.svelte';
     import ChevronRightIcon from '@lucide/svelte/icons/chevron-right'
+    import Alert from '$lib/components/ui/Alert.svelte'
+    import ButtonLoader from '$lib/components/ui/forms/ButtonLoader.svelte';
 
+    let loading = $state(false)
     let { form }: { form: ActionData } = $props()
 </script>
 
@@ -45,9 +49,19 @@
     </div>
 
 
-    <form method="POST" use:enhance class="space-y-6">
+    <form 
+        method="POST"  
+        use:enhance={enhanceWithToast({
+            successMessage: 'Customer created successfully',
+            errorMessage: form?.error ?? 'Failed to create customer',
+            onSuccess: () => loading = false,
+            onError: () => loading = false,
+        })}
+        class="space-y-6"
+        onsubmit={() => { loading = true }}
+    >
         {#if form?.error}
-            <p>{form.error}</p>
+            <Alert variant="error" title="Error" message={form.error} />
         {/if}
 
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -158,9 +172,14 @@
 
             <button
                 type="submit"
+                disabled={loading}
                 class="flex w-full justify-center rounded-lg bg-brand-500 px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-600 disabled:opacity-60 sm:w-auto"
             >
-                Create Customer
+                {#if loading}
+                    <ButtonLoader />
+                {:else}
+                    Create Customer
+                {/if}
             </button>
         </div>
     </form>

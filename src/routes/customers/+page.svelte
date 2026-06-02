@@ -1,5 +1,6 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
+    import { enhanceWithToast } from '$lib/utils/formEnhance'
     import AdminLayout from '$lib/components/layout/AdminLayout.svelte'
     import BaseTable from '$lib/components/table/BaseTable.svelte'
     import TableCell from '$lib/components/table/TableCell.svelte'
@@ -39,14 +40,19 @@
     method="POST"
     action="?/delete"
     bind:this={formEl}
-    use:enhance={() => {
-        deleteLoading = true
-        return async ({ update }) => {
-            await update()
+    onsubmit={() => { deleteLoading = true }}
+    use:enhance={enhanceWithToast({
+        successMessage: 'Deleted successfully',
+        errorMessage: 'Failed to delete customer',
+        onSuccess: () => {
+            deleteLoading = false
+            deleteTarget = null
+        },
+        onError: () => {
             deleteLoading = false
             deleteTarget = null
         }
-    }}
+    })}
 >
     <input type="hidden" name="id" value={deleteTarget?.id ?? ''} />
 </form>
@@ -80,8 +86,8 @@
             <TableCell variant="action">
                 <RowActions actions={[
                     { label: 'View',   icon: ArrowUpRightIcon, href: `/customers/${customer.id}` },
-                    { label: 'Edit',   icon: SquarePenIcon,          href: `/customers/${customer.id}/edit` },
-                    { label: 'Delete', icon: Trash2Icon,        variant: 'danger', onclick: () => deleteTarget = customer },
+                    { label: 'Edit',   icon: SquarePenIcon,    href: `/customers/${customer.id}/edit` },
+                    { label: 'Delete', icon: Trash2Icon,       variant: 'danger', onclick: () => deleteTarget = customer },
                 ]} />
             </TableCell>
         {/snippet}

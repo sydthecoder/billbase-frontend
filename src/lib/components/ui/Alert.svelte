@@ -30,7 +30,7 @@
     }
 </script>
 
-<div class={`mb-6 rounded-xl border px-4 py-2 ${variantClasses[variant].container}`}>
+<div class={`max-w-xs mb-6 rounded-xl border px-4 py-2 ${variantClasses[variant].container}`}>
     <div class="flex items-start gap-3">
         <div class={`-mt-0.5 ${variantClasses[variant].icon}`}>
             <InfoCircleIcon />
