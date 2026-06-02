@@ -1,5 +1,3 @@
-import { API_BASE_URL } from '$env/static/private'
-
 export async function serverApi(
     path: string,
     options: RequestInit = {},
