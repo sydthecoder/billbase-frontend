@@ -1,9 +1,11 @@
+import { API_BASE_URL } from '$env/static/private'
+
 export async function serverApi(
     path: string,
     options: RequestInit = {},
     cookieHeader?: string
 ) {
-    const response = await fetch(`https://api.billbase.co.za/api/v1${path}`, {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
         ...options,
         headers: {
             'Accept': 'application/json',
