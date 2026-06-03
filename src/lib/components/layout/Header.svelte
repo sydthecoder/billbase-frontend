@@ -3,7 +3,7 @@
     import ThemeToggler from '$lib/components/layout/header/ThemeToggler.svelte'
     import SearchBar from '$lib/components/layout/header/SearchBar.svelte'
     import HeaderLogo from '$lib/components/layout/header/HeaderLogo.svelte'
-    import NotificationMenu from '$lib/components/layout/header/NotificationMenu.svelte'
+    import QuickCreate from '$lib/components/layout/header/QuickCreate.svelte'
     import UserMenu from '$lib/components/layout/header/UserMenu.svelte'
 
     let isApplicationMenuOpen = $state(false)
@@ -106,7 +106,7 @@
         >
             <div class="flex items-center gap-2 2xsm:gap-3">
                 <ThemeToggler />
-                <NotificationMenu />
+                <QuickCreate />
             </div>
 
             <UserMenu />

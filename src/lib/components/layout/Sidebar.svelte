@@ -38,7 +38,7 @@
 
     const logoWrapperClass = $derived(
         [
-            'py-8 flex',
+            'py-6 flex',
             !$isExpanded && !$isHovered ? 'lg:justify-center' : 'justify-start',
         ]
             .filter(Boolean)

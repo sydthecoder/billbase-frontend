@@ -187,7 +187,7 @@
                                                     : ''
                                             }`}
                                         >
-                                            <ChevronDownIcon />
+                                            <ChevronDownIcon strokeWidth={1.5} />
                                         </span>
                                     {/if}
                                 </button>
