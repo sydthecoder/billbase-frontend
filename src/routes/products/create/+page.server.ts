@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit'
-import { getCategories, createProduct } from '$lib/server/products'
+import { getCategories, createProduct, createCategory } from '$lib/server/products'
 import type { PageServerLoad, Actions } from './$types'
 
 export const load: PageServerLoad = async ({ cookies }) => {
@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 }
 
 export const actions: Actions = {
-    default: async ({ request, cookies }) => {
+    createProduct: async ({ request, cookies }) => {
         const token = cookies.get('auth_token')!
         const form = await request.formData()
 
@@ -34,5 +34,24 @@ export const actions: Actions = {
         }
 
         redirect(303, '/products')
+    },
+
+    createCategory: async ({ request, cookies }) => {
+        const token = cookies.get('auth_token')!
+        const form = await request.formData()
+
+        const payload = {
+            name:        form.get('name') as string,
+            description: form.get('description') as string || undefined,
+        }
+
+        try {
+            await createCategory(token, payload)
+            return { success: true }
+        } catch (err: any) {
+            return fail(err.status ?? 500, {
+                categoryError: err.message ?? 'Failed to create category.',
+            })
+        }
     },
 }

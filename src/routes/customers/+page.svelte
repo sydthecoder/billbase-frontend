@@ -20,7 +20,7 @@
 
     const columns = [
         { label: 'Name',          key: 'full_name',      sortable: true },
-        { label: 'Customer Code', key: 'customer_code',  sortable: true },
+        { label: 'Code',          key: 'customer_code',  sortable: true },
         { label: 'Email',         key: 'email',          sortable: false },
         { label: 'Phone',         key: 'phone',          sortable: false },
         { label: 'Status',        key: 'status',         sortable: true },

@@ -1,86 +1,97 @@
 <script lang="ts">
     import { enhance } from '$app/forms'
-    import type { PageData, ActionData } from './$types'
     import AdminLayout from '$lib/components/layout/AdminLayout.svelte'
+    import BaseTable from '$lib/components/table/BaseTable.svelte'
+    import TableCell from '$lib/components/table/TableCell.svelte'
+    import RowActions from '$lib/components/table/RowActions.svelte'
+    import DeleteModal from '$lib/components/ui/DeleteModal.svelte'
+    import SquarePenIcon from '@lucide/svelte/icons/square-pen'
+    import Trash2Icon from '@lucide/svelte/icons/trash-2'
+    import type { PageData } from './$types'
+    import type { Product } from '$lib/types'
 
-    let { data, form }: { data: PageData; form: ActionData } = $props()
+    let { data }: { data: PageData } = $props()
 
-    let showModal = $state(false)
+    let deleteTarget = $state<Product | null>(null)
+    let deleteLoading = $state(false)
+    let formEl: HTMLFormElement | null = null
+
+    const columns = [
+        { label: 'Name',     key: 'name',     sortable: true },
+        { label: 'Category', key: 'category', sortable: false },
+        { label: 'Price',    key: 'price',    sortable: true },
+        { label: 'Unit',     key: 'unit',     sortable: false },
+        { label: 'SKU',      key: 'sku',      sortable: false },
+        { label: 'Taxable',  key: 'taxable',  sortable: false },
+        { label: 'Status',   key: 'status',   sortable: true },
+        { label: 'Actions',  sortable: false },
+    ]
+
+    const tabs = [
+        { label: 'All',      value: 'all' },
+        { label: 'Active',   value: 'active' },
+        { label: 'Inactive', value: 'inactive' },
+    ]
+
+    const searchKeys = ['name', 'sku']
 </script>
 
+<form
+    method="POST"
+    action="?/deleteProduct"
+    bind:this={formEl}
+    onsubmit={() => { deleteLoading = true }}
+    use:enhance={() => {
+        return async ({ update }) => {
+            await update()
+            deleteLoading = false
+            deleteTarget = null
+        }
+    }}
+>
+    <input type="hidden" name="id" value={deleteTarget?.id ?? ''} />
+</form>
+
+<DeleteModal
+    open={!!deleteTarget}
+    item={deleteTarget?.name ?? ''}
+    loading={deleteLoading}
+    onConfirm={() => formEl?.requestSubmit()}
+    onCancel={() => deleteTarget = null}
+/>
+
 <AdminLayout>
-    <!-- Quick Add Category Modal -->
-    {#if showModal}
-        <div style="position:fixed;inset:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:50">
-            <div style="background:white;padding:2rem;border-radius:8px;min-width:400px">
-                <h2>Quick Add Category</h2>
+    <BaseTable
+        {columns}
+        {tabs}
+        {searchKeys}
+        rows={data.products}
+        searchPlaceholder="Search products..."
+        emptyMessage="No products found."
+        createUrl="/products/create"
+    >
+        {#snippet cells(product)}
+            <TableCell variant="primary">{product.name}</TableCell>
+            <TableCell>{product.category?.name ?? '-'}</TableCell>
+            <TableCell>R {product.price}</TableCell>
+            <TableCell>{product.unit_label ?? '-'}</TableCell>
+            <TableCell variant="code">{product.sku ?? '-'}</TableCell>
+            <TableCell>{product.is_taxable ? 'Yes' : 'No'}</TableCell>
+            <TableCell variant="badge" status={product.status}>
+                <span class="first-letter:uppercase">{product.status}</span>
+            </TableCell>
+            <TableCell variant="action">
+                <RowActions actions={[
+                    { label: 'Edit',   icon: SquarePenIcon, href: `/products/${product.id}/edit` },
+                    { label: 'Delete', icon: Trash2Icon,    variant: 'danger', onclick: () => deleteTarget = product },
+                ]} />
+            </TableCell>
+        {/snippet}
 
-                {#if form?.categoryError}
-                    <p style="color:red">{form.categoryError}</p>
-                {/if}
-
-                <form method="POST" action="?/createCategory" use:enhance={() => {
-                    return ({ result }) => {
-                        if (result.type === 'success') showModal = false
-                    }
-                }}>
-                    <input
-                        type="text"
-                        name="name"
-                        placeholder="Category name"
-                        required
-                    />
-                    <input
-                        type="text"
-                        name="description"
-                        placeholder="Description (optional)"
-                    />
-                    <button type="submit">Add</button>
-                    <button type="button" onclick={() => showModal = false}>Cancel</button>
-                </form>
-
-                <hr />
-
-                <a href="/products/categories">Manage all categories →</a>
-            </div>
-        </div>
-    {/if}
-
-    <!-- Page -->
-    <div>
-        <div style="display:flex;justify-content:space-between;align-items:center">
-            <h1>Products</h1>
-            <div>
-                <button onclick={() => showModal = true}>+ Add Category</button>
-                <a href="/products/create">+ Add Product</a>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Unit</th>
-                    <th>SKU</th>
-                    <th>Taxable</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {#each data.products as product}
-                    <tr>
-                        <td>{product.name}</td>
-                        <td>{product.category?.name ?? '-'}</td>
-                        <td>R {product.price}</td>
-                        <td>{product.unit_label ?? '-'}</td>
-                        <td>{product.sku ?? '-'}</td>
-                        <td>{product.is_taxable ? 'Yes' : 'No'}</td>
-                        <td>{product.status}</td>
-                    </tr>
-                {/each}
-            </tbody>
-        </table>
-    </div>
+        {#snippet bulkActions(selectedIds)}
+            <button class="text-sm font-medium text-error-500 hover:text-error-600">
+                Delete {selectedIds.size} products
+            </button>
+        {/snippet}
+    </BaseTable>
 </AdminLayout>
