@@ -1,12 +1,19 @@
 import { writable } from 'svelte/store'
+import { browser } from '$app/environment'
 
-export const isExpanded = writable(true)
+const savedExpanded = browser ? localStorage.getItem('sidebar_expanded') !== 'false' : true
+
+export const isExpanded = writable(savedExpanded)
 export const isMobileOpen = writable(false)
 export const isHovered = writable(false)
 export const openSubmenu = writable<string | null>(null)
 
 export const toggleSidebar = () => {
-    isExpanded.update((value) => !value)
+    isExpanded.update((value) => {
+        const next = !value
+        if (browser) localStorage.setItem('sidebar_expanded', String(next))
+        return next
+    })
 }
 
 export const toggleMobileSidebar = () => {

@@ -38,7 +38,7 @@
 
     const logoWrapperClass = $derived(
         [
-            'py-6 flex',
+            'py-6 hidden md:flex',
             !$isExpanded && !$isHovered ? 'lg:justify-center' : 'justify-start',
         ]
             .filter(Boolean)
@@ -55,7 +55,7 @@
         <SidebarLogo />
     </div>
 
-    <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+    <div class="pt-3 flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
         <SidebarNavigation />
 
         {#if $isExpanded || $isHovered || $isMobileOpen}
