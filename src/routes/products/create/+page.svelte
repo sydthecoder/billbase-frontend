@@ -65,6 +65,9 @@
                 })}
             >
                 <div class="space-y-4">
+                    {#if form?.categoryError}
+                        <Alert variant="error" title="Error" message={form.categoryError} />
+                    {/if}
                     <div>
                         <Label for="name" text="Name" required />
                         <TextInput id="name" name="name" placeholder="Category name" required />
@@ -99,7 +102,7 @@
         method="POST"
         use:enhance={enhanceWithToast({
             successMessage: 'Product created successfully',
-            errorMessage: form?.error ?? 'Failed to create product',
+            errorMessage: 'Failed to create product',
             onSuccess: () => loading = false,
             onError: () => loading = false,
         })}

@@ -23,9 +23,7 @@ export function enhanceWithToast(options: {
                 await update()
 
             } else {
-                const msg = result.type === 'failure'
-                    ? (result.data?.error ?? options.errorMessage ?? 'Failed')
-                    : options.errorMessage ?? 'Something went wrong'
+                const msg = options.errorMessage ?? 'Something went wrong'
 
                 toast.error(msg, { id: toastId })
                 options.onError?.(result.data)

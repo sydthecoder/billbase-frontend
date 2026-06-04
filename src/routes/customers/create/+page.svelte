@@ -10,8 +10,10 @@
     import ChevronRightIcon from '@lucide/svelte/icons/chevron-right'
     import Alert from '$lib/components/ui/Alert.svelte'
     import ButtonLoader from '$lib/components/ui/forms/ButtonLoader.svelte';
+    import UpgradeModal from '$lib/components/ui/UpgradeModal.svelte'
 
     let loading = $state(false)
+    let showUpgradeModal = $state(false)
     let { form }: { form: ActionData } = $props()
 </script>
 
@@ -48,13 +50,24 @@
         </nav>
     </div>
 
+    <UpgradeModal
+        open={showUpgradeModal}
+        message={form?.error}
+        onClose={() => showUpgradeModal = false}
+    />
+
     <form 
         method="POST"  
         use:enhance={enhanceWithToast({
             successMessage: 'Customer created successfully',
-            errorMessage: form?.error ?? 'Failed to create customer',
+            errorMessage: 'Failed to create customer',
             onSuccess: () => loading = false,
-            onError: () => loading = false,
+            onError: (data) => {
+                if (data?.limitReached) {
+                    showUpgradeModal = true
+                }
+                loading = false
+            }
         })}
         class="space-y-6"
         onsubmit={() => { loading = true }}

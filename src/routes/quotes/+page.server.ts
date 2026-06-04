@@ -22,6 +22,19 @@ export const actions: Actions = {
         }
     },
 
+    bulkDelete: async ({ request, cookies }) => {
+        const token = cookies.get('auth_token')!
+        const form = await request.formData()
+        const ids = form.getAll('ids').map(Number)
+
+        try {
+            await Promise.all(ids.map(id => deleteQuote(token, id)))
+            return { success: true }
+        } catch (err: any) {
+            return fail(500, { error: 'Failed to delete quotes.' })
+        }
+    },
+
     updateStatus: async ({ request, cookies }) => {
         const token = cookies.get('auth_token')!
         const form = await request.formData()

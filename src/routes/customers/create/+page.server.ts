@@ -29,6 +29,7 @@ export const actions: Actions = {
             return fail(err.status ?? 500, {
                 error: err.message ?? 'Failed to create customer.',
                 errors: err.errors ?? {},
+                limitReached: err.status === 403,
                 ...payload,
             })
         }
